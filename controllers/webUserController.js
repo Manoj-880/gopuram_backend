@@ -1,4 +1,5 @@
 const webUserRepo = require("../repos/webUserRepo");
+const hashing = require('../utils/hashing');
 
 const getAll = async (req, res) => {
     try {
@@ -13,37 +14,78 @@ const getAll = async (req, res) => {
         res.status(500).send({
             success: false,
             message: "Internal server error",
-        })
+        });
     }
 };
 
-const addUser = async (req, res) => {
+const login = async (req, res) => {
     try {
-            let newUser = await webUserRepo.add(req.body);
-            res.status(200).send({
-                success: true,
-                message: "User added successfully",
+        let {userName, password} = req.body;
+        const existingUsers = await webUserRepo.findByUserName(userName);
+        if(existingUsers.length === 0){
+            return res.status(400).send({
+                success : false,
+                message: "Invalid User name and password",
             });
-        // let number = await webUserRepo.findByNumber(req.body.mobileNumber);
-        // if(!number){
-        //     let newUser = await webUserRepo.add(req.body);
-        //     res.status(200).send({
-        //         success: true,
-        //         message: "User added successfully",
-        //     });
-        // } else {
-        //     res.status(200).send({
-        //         success: false,
-        //         message: "User already exist with this mobile number"
-        //     })
-        // }
+        } else {
+            let existingUser = existingUsers[0];
+            hashedPassword = existingUser.password;
+            let match = await hashing.comparePasswords(password, hashedPassword);
+            if (match){
+                return res.status(200).send({
+                    success: true,
+                    message: "Logged in successfully",
+                    data: existingUser,
+                });
+            } else {
+                return res.status(400).send({
+                    success : false,
+                    message: "Invalid User name and password",
+                });
+            }
+        }
     } catch (error) {
         console.log(error);
         res.status(500).send({
             success: false,
             message: "Internal server error",
         });
-    }    
+    }
+};
+
+const addUser = async (req, res) => {
+    try {
+        let mobileNumber = req.body.mobileNumber;
+        const existingUser = await webUserRepo.findByNumber(mobileNumber);
+        const user = await webUserRepo.findByUserName(req.body.userName);
+        if (existingUser.length > 0) {
+            return res.status(400).send({
+                success: false,
+                message: "User already exists with this mobile number",
+            });
+        }
+        if(user.length > 0) {
+            return res.status(400).send({
+                success: false,
+                message: "User name already exist"
+            });
+        }
+        let password = req.body.password;
+        let hashedPassword = await hashing.hashPassword(password);
+        let newUser = req.body;
+        newUser.password = hashedPassword;
+        await webUserRepo.add(newUser);
+        res.status(200).send({
+            success: true,
+            message: "User added successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Internal server error",
+        });
+    }      
 };
 
 const getById = async (req, res) => {
@@ -99,6 +141,7 @@ const deleteById = async (req, res) => {
 };
 
 module.exports = {
+    login,
     getAll,
     addUser,
     getById,

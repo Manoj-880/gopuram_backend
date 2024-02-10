@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const webUserController = require("../controllers/webUserController");
 
+router.post('/login',webUserController.login);
 router.get('/', webUserController.getAll);
 router.post('/add', webUserController.addUser);
 router.get('/userid/:id', webUserController.getById);

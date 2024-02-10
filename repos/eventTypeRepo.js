@@ -14,7 +14,7 @@ const getById = (id) => {
 };
 
 const updateById = (id, data) => {
-    return eventTypeModel.findOneAndUpdate({_d: id}, {$set: data});
+    return eventTypeModel.findOneAndUpdate({_id: id}, {$set: data});
 };
 
 const deleteById = (id) => {

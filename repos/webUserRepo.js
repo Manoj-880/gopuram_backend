@@ -15,6 +15,10 @@ const getById = (id) => {
 
 const findByNumber = (number) => {
     return webUserModel.find({mobileNumber: number});
+};
+
+const findByUserName = (name) => {
+    return webUserModel.find({userName: name});
 }
 
 const updateById = (id, data) => {
@@ -30,6 +34,7 @@ module.exports = {
     add,
     getById,
     findByNumber,
+    findByUserName,
     updateById,
     deleteById,
 };

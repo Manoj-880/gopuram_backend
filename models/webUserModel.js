@@ -5,6 +5,7 @@ const webUserSchema = new Schema({
     userName: {
         type: String,
         required: true,
+        unique: true,
     },
     mobileNumber: {
         type: Number,

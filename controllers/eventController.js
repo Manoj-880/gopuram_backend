@@ -3,7 +3,7 @@ const eventRepo = require("../repos/eventRepo");
 const getAll = async (req, res) => {
     try {
         let events = await eventRepo.get();
-        response.status(200).send({
+        res.status(200).send({
             success: true,
             message: "events fetched successfully",
             data: events,

@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const mobileUserSchema = new Schema({
+    userName: {
+        type: String, 
+        required: true,
+    },
     firstName: {
         type: String,
         required: true,

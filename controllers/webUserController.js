@@ -23,7 +23,7 @@ const login = async (req, res) => {
         let {userName, password} = req.body;
         const existingUsers = await webUserRepo.findByUserName(userName);
         if(existingUsers.length === 0){
-            return res.status(400).send({
+            return res.status(200).send({
                 success : false,
                 message: "Invalid User name and password",
             });
@@ -38,7 +38,7 @@ const login = async (req, res) => {
                     data: existingUser,
                 });
             } else {
-                return res.status(400).send({
+                return res.status(200).send({
                     success : false,
                     message: "Invalid User name and password",
                 });
@@ -59,13 +59,13 @@ const addUser = async (req, res) => {
         const existingUser = await webUserRepo.findByNumber(mobileNumber);
         const user = await webUserRepo.findByUserName(req.body.userName);
         if (existingUser.length > 0) {
-            return res.status(400).send({
+            return res.status(200).send({
                 success: false,
                 message: "User already exists with this mobile number",
             });
         }
         if(user.length > 0) {
-            return res.status(400).send({
+            return res.status(200).send({
                 success: false,
                 message: "User name already exist"
             });

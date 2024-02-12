@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const app = express();
 app.use(cors());
 
+// app.use((req, res, next) => {
+//     console.log(`${req.method} ${req.url}`);
+// });
+
 const PORT = 5000;
 
 mongoose

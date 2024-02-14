@@ -19,7 +19,6 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
     try {
-        console.log(req.body);
         await eventRepo.add(req.body);
         res.status(200).send({
             success: true,

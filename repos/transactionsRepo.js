@@ -1,7 +1,7 @@
 const transactionsModel = require("../models/transactionsModel");
 
 const get = () => {
-    return transactionsModel.find().populate('donationType');
+    return transactionsModel.find().populate('donationType').populate('userId');
 };
 
 const add = (data) => {

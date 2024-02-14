@@ -25,9 +25,9 @@ const eventModel = new Schema({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "mobileUser",
+        ref: "webUser",
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true});
 
 module.exports = mongoose.model("event", eventModel);

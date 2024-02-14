@@ -1,7 +1,7 @@
 const eventModel = require("../models/eventModel");
 
 const get = () => {
-    return eventModel.find().populate('eventType');
+    return eventModel.find().populate('eventType').populate('userId');
 };
 
 const add = (data) => {

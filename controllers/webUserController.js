@@ -108,6 +108,13 @@ const getById = async (req, res) => {
 
 const updateById = async (req, res) => {
     try {
+        let user = await webUserRepo.findByUserName(req.body.userName);
+        if(user.length > 1){
+            return res.status(200).send({
+                success: false,
+                message: "User name already exist"
+            });
+        }
         let id = req.params.id;
         await webUserRepo.updateById(id, req.body);
         res.status(200).send({

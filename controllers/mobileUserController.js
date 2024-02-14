@@ -24,6 +24,19 @@ const addUser = async(req, res) => {
                 success: true,
                 message: "User added successfully",
             });
+        // let number = await mobileUserRepo.findByNumber(req.body.mobileNumber);
+        // if(!number){
+        //     let newUser = await mobileUserRepo.add(req.body);
+        //     res.status(200).send({
+        //         success: true,
+        //         message: "User added successfully",
+        //     });
+        // } else {
+        //     res.status(200).send({
+        //         success: false,
+        //         message: "Mobile number already exists",
+        //     })
+        // }
     } catch (error) {
         console.log(error);
         res.status(500).send({

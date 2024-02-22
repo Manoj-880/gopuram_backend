@@ -8,22 +8,22 @@ const mobileUserSchema = new Schema({
     },
     firstName: {
         type: String,
-        required: true,
     },
     lastName: {
         type: String,
-        required: true,
     },
     mobileNumber: {
         type: Number,
-        required: true,
+    },
+    gender: {
+        type: String,
     },
     gothram: {
         type: String,
     },
     address: {
         type: String,
-    }
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('mobileUser',mobileUserSchema);

@@ -6,7 +6,7 @@ const mobileOtpSchema = new Schema({
         type: Number,
     },
     otp: {
-        type: Number,
+        type: String,
     },
 }, {timestamps: true});
 

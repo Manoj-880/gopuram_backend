@@ -1,0 +1,16 @@
+POST /api/mobileusers/generateOtp 200 57 - 20.944 ms
+POST /generateOtp
+POST /add
+GET /
+GET /api/mobileusers/ 200 898 13.026 ms
+GET /api/mobileusers/generateOtp 404 166 1.966 ms
+POST /api/mobileusers/generateOtp 200 57 12.216 ms
+POST /api/transactions/add 200 51 16.813 ms
+POST /api/transactions/ 404 157 1.422 ms
+GET /api/transactions/ 200 1040 14.517 ms
+GET /api/transactions/ 200 1040 3.665 ms
+POST /api/transactions/add 200 51 2.016 ms
+GET /api/transactions/ 500 51 8.926 ms
+POST /api/transactions/add 200 51 14.717 ms
+GET /api/transactions/ 500 51 14.113 ms
+GET /api/transactions/ 200 1586 6.634 ms

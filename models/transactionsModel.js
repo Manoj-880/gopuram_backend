@@ -3,7 +3,7 @@ const Schema = mogoose.Schema;
 
 const transactionsModel = new Schema({
     donationType: {
-        type: mogoose.Schema.Types.ObjectId,
+        type: String,
         ref: "donationType",
         required: true,
     },
@@ -18,6 +18,12 @@ const transactionsModel = new Schema({
     gothram: {
         type: String,
     },
+    amount: {
+        type: Number,
+    },
+    donationName: {
+        type: String,
+    }
 }, { timestamps: true });
 
 module.exports = mogoose.model("transaction", transactionsModel);

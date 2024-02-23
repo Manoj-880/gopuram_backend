@@ -3,16 +3,25 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 
-// app.use((req, res, next) => {
-//     console.log(`${req.method} ${req.url}`);
-// });
+// logging the api calls
+const filePath = path.join(__dirname, "logs", "request.log");
+const accessLogStream = fs.createWriteStream(filePath, { flags: 'a' });
+
+app.use(morgan(':method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
+app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = 5000;
 
+// mongoDB connection
 mongoose
     .connect("mongodb://127.0.0.1:27017/Gopuram")
     .then(() => console.log("DB Connected"))
@@ -36,7 +45,5 @@ app.use('/api/donationtypes', donationTypes);
 app.use('/api/transactions', transactions);
 app.use('/api/eventtypes', eventTypes);
 app.use('/api/events', events);
-
-
 
 app.listen(PORT, () => console.log(`server is running on ${PORT}`));

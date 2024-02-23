@@ -14,7 +14,7 @@ const getById = (id) => {
 };
 
 const getByUserId = (userId) => {
-    return transactionsModel.find({ userId: userId }).populate('donationType');
+    return transactionsModel.find({ userId: userId }, {userId: 0, createdAt: 0, updatedAt: 0, __v: 0}).populate({path: 'donationType',select: '-_id -createdAt -updatedAt -__v'});
 };
 
 const updateById = (id, data) => {

@@ -2,6 +2,7 @@ const donationTypeRope = require("../repos/donationTypeRepo");
 
 const getAll = async (req, res) => {
     try {
+        // get all the donation types from database
         let allDonationTypes = await donationTypeRope.get();
         res.status(200).send({
             success: true,
@@ -20,6 +21,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         let id = req.params.id;
+        // getting the donation type by its id
         let donation = await donationTypeRope.getById(id);
         res.status(200).send({
             success: true,
@@ -37,6 +39,7 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
     try {
+        // adding donation type to database
         await donationTypeRope.add(req.body);
         res.status(200).send({
             success: true,
@@ -54,6 +57,7 @@ const add = async (req, res) => {
 const update = async (req, res) => {
     try {
         let id = req.params.id;
+        // updating donation type in database
         await donationTypeRope.updateById(id, req.body);
         res.status(200).send({
             success: true,
@@ -71,6 +75,7 @@ const update = async (req, res) => {
 const deleteById = async (req, res) => {
     try {
         let id = req.params.id;
+        // delete donation type from database by finding by its id
         await donationTypeRope.deleteById(id);
         res.status(200).send({
             success: true,

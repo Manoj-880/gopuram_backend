@@ -29,6 +29,13 @@ mongoose
 
 app.use(bodyParser.json());
 
+// test api call
+
+const test = (req, res) => {
+    res.status(200).send('Test api successfull');
+};
+app.use('/api/test', test);
+
 // Routes
 const webUsers = require("./routes/webUserRoutes");
 const mobileUsers = require("./routes/mobileUserRoutes");

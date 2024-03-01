@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
 
+const Constants = require('./constants');
+
 const app = express();
 app.use(cors());
 
@@ -17,17 +19,13 @@ const accessLogStream = fs.createWriteStream(filePath, { flags: 'a' });
 app.use(morgan(':method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
 
-// Serve static files from the directory where images are stored
-const imagePath = path.join(__dirname, '..', 'Desktop', 'GopuramImages');
-app.use('/GopuramImages', express.static(imagePath));
-
 app.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = 5000;
+const PORT = Constants.PORT;
 
 // MongoDB connection
 mongoose
-    .connect("mongodb://127.0.0.1:27017/Gopuram")
+    .connect(Constants.mongoConnection)
     .then(() => console.log("DB Connected"))
     .catch((err) => console.log(err));
 

@@ -50,6 +50,8 @@ const getAll = async (req, res) => {
 
 const deleteImage = async(req, res) => {
     try {
+        let imageToDelete = await galleryRepo.getById(req.params.id);
+        fs.unlinkSync(imageToDelete.image);
         await galleryRepo.deleteById(req.params.id);
         res.status(200).send({
             success: true,

@@ -5,7 +5,9 @@ const otp = require('../utils/otp');
 const generateOtp = async (req, res) => {
     try {
         let {mobileNumber} = req.body;
-        let newOtp = otp.geneateOTP();
+        let newOtp;
+        if(mobileNumber){
+        newOtp = otp.geneateOTP();}
         let user = await mobileOtpRepo.findByNumber(mobileNumber);
         if(user.length > 0){
             await mobileOtpRepo.updateOtp(mobileNumber, newOtp);
@@ -18,10 +20,11 @@ const generateOtp = async (req, res) => {
         res.status(200).send({
             success: true,
             message: "Otp generated",
+            number: mobileNumber,
             otp: newOtp,
         });
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(500).send({
             success: false,
             message: "Internal server error",
@@ -33,10 +36,9 @@ const login = async (req, res) => {
     try {
         let { mobileNumber, otp } = req.body;
         let userMobileOtp = await mobileOtpRepo.findByNumber(mobileNumber);
-        let dbOtp = userMobileOtp[0].otp;
+        let dbOtp = userMobileOtp[0].otp.toString();
         let user = await mobileUserRepo.findByNumber(mobileNumber);
         let existance = user.length > 0;
-
         if (otp === dbOtp) {
             if (user.length === 0) {
                 return res.status(200).send({
@@ -52,7 +54,7 @@ const login = async (req, res) => {
                 data: user,
             });
         } else {
-            res.status(400).send({
+            res.status(200).send({
                 success: false,
                 message: "Invalid OTP",
             });
@@ -89,9 +91,11 @@ const addUser = async(req, res) => {
         let number = await mobileUserRepo.findByNumber(req.body.mobileNumber);
         if(number.length < 1){
             await mobileUserRepo.add(req.body);
+            let data = await mobileUserRepo.findByNumber(req.body.mobileNumber);
             res.status(200).send({
                 success: true,
                 message: "User added successfully",
+                data: data,
             });
         } else {
             res.status(400).send({

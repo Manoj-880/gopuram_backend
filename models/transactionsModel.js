@@ -1,6 +1,13 @@
 const mogoose = require("mongoose");
 const Schema = mogoose.Schema;
 
+function getCurrentIST() {
+    const dateUTC = new Date();
+    const ISTOffset = 330; // IST is UTC+5:30
+    const ISTTime = new Date(dateUTC.getTime() + (ISTOffset * 60000));
+    return ISTTime;
+}
+
 const transactionsModel = new Schema({
     donationType: {
         type: String,
@@ -24,6 +31,8 @@ const transactionsModel = new Schema({
     donationName: {
         type: String,
     }
-}, { timestamps: true });
+}, { timestamps: {
+    currentTime: getCurrentIST
+} });
 
 module.exports = mogoose.model("transaction", transactionsModel);

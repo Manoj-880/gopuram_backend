@@ -10,18 +10,22 @@ const path = require('path');
 const app = express();
 app.use(cors());
 
-// logging the api calls
+// Logging the API calls
 const filePath = path.join(__dirname, "logs", "request.log");
 const accessLogStream = fs.createWriteStream(filePath, { flags: 'a' });
 
 app.use(morgan(':method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
 
+// Serve static files from the directory where images are stored
+const imagePath = path.join(__dirname, '..', 'Desktop', 'GopuramImages');
+app.use('/GopuramImages', express.static(imagePath));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = 5000;
 
-// mongoDB connection
+// MongoDB connection
 mongoose
     .connect("mongodb://127.0.0.1:27017/Gopuram")
     .then(() => console.log("DB Connected"))
@@ -29,10 +33,9 @@ mongoose
 
 app.use(bodyParser.json());
 
-// test api call
-
+// Test API call
 const test = (req, res) => {
-    res.status(200).send('Test api successfull');
+    res.status(200).send('Test API successful');
 };
 app.use('/api/test', test);
 
@@ -43,14 +46,15 @@ const donationTypes = require('./routes/donationTypeRoutes');
 const transactions = require('./routes/transactionsRouter');
 const eventTypes = require("./routes/eventTypeRoutes");
 const events = require("./routes/eventsRouter");
+const images = require("./routes/galleryRoutes");
 
-
-// End points
+// Endpoints
 app.use('/api/webusers', webUsers);
 app.use('/api/mobileusers', mobileUsers);
 app.use('/api/donationtypes', donationTypes);
 app.use('/api/transactions', transactions);
 app.use('/api/eventtypes', eventTypes);
 app.use('/api/events', events);
+app.use('/api/images', images);
 
-app.listen(PORT, () => console.log(`server is running on ${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

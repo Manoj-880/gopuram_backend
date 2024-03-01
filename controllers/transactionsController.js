@@ -53,7 +53,7 @@ const getById = async (req, res) => {
 
 const getByUserId = async (req, res) => {
     try {
-        let id = req.params.id;
+        let id = req.params.userid;
         let transactions = await transactionRepo.getByUserId(id);
         res.status(200).send({
             success: true,

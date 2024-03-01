@@ -4,7 +4,7 @@ const transactionsController = require("../controllers/transactionsController");
 
 router.get('/', transactionsController.get);
 router.get('/transactionid/:id', transactionsController.getById);
-router.get('/userid/:id', transactionsController.getByUserId);
+router.get('/userid/:userid', transactionsController.getByUserId);
 router.post('/add', transactionsController.add);
 
 module.exports = router;

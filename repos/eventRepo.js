@@ -25,6 +25,11 @@ const deleteById = (id) => {
     return eventModel.findOneAndDelete({_id: id});
 };
 
+const upcoming = () => {
+    const today = moment().startOf('day'); // Get today's date
+    return eventModel.find({ startDate: { $gte: today } }).populate('eventType').populate('userId');
+};
+
 module.exports = {
     get,
     add,
@@ -32,4 +37,5 @@ module.exports = {
     getByUserId,
     updateById,
     deleteById,
+    upcoming,
 }

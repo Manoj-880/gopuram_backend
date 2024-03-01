@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 function getCurrentIST() {
@@ -8,15 +8,16 @@ function getCurrentIST() {
     return ISTTime;
 }
 
-const mobileOtpSchema = new Schema({
-    mobileNumber: {
-        type: Number,
+const galleryModel = new Schema({
+    image: {
+        type: String,
     },
-    otp: {
-        type: Number,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "webUser",
     },
-}, {timestamps: {
+},{timestamps: {
     currentTime: getCurrentIST
 }});
 
-module.exports = mongoose.model('mobileOtp', mobileOtpSchema);
+module.exports = mongoose.model('gallery', galleryModel);
